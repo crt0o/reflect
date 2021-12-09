@@ -1,0 +1,5 @@
+name: 'reflect'
+version: '1.0'
+author: 'crt0o'
+main: 'reflect.Reflect'
+api-version: '1.18'
