@@ -53,8 +53,8 @@ public class Reflect extends JavaPlugin {
         this.channelName = getConfig().getString("channel-name");
 
         if (token == null) {
-            getLogger().warning("\"bot-token\" not specified, exiting.");
-            getPluginLoader().disablePlugin(this);
+            this.die("\"bot-token\" not specified, exiting.");
+            return;
         }
 
         if (this.channelName == null) {
@@ -67,8 +67,8 @@ public class Reflect extends JavaPlugin {
                     .addEventListeners(new DiscordEventListener())
                     .build();
         } catch (LoginException err) {
-            getLogger().warning("Failed to authenticate with discord api, exiting.");
-            getPluginLoader().disablePlugin(this);
+            this.die("Failed to authenticate with discord api, exiting.");
+            return;
         }
 
         this.onlinePlayers = 0;
@@ -113,5 +113,10 @@ public class Reflect extends JavaPlugin {
 
     private void updateStatus() {
         this.jda.getPresence().setActivity(Activity.playing(this.onlinePlayers + (this.onlinePlayers == 1 ? " player " : " players ") + "online."));
+    }
+
+    private void die(String message) {
+        getLogger().warning(message);
+        getPluginLoader().disablePlugin(this);
     }
 }
